@@ -30,6 +30,7 @@ import (
 	"log/slog"
 	"net"
 	"os"
+	"runtime/debug"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -576,7 +577,7 @@ func (c *client) internalConnLost(whyConnLost error) {
 	// (including after sending a DisconnectPacket) as such we only do cleanup etc if the
 	// routines were actually running and are not being disconnected at users request
 	DEBUG.Println(CLI, "internalConnLost called")
-	c.logger.Debug("internalConnLost called", componentAttr(CLI))
+	c.logger.Debug("internalConnLost called", componentAttr(CLI), slog.String("stacktrace", string(debug.Stack())))
 	disDone, err := c.status.ConnectionLost(c.options.AutoReconnect && c.status.ConnectionStatus() > connecting)
 	if err != nil {
 		if err == errConnLossWhileDisconnecting || err == errAlreadyHandlingConnectionLoss {
