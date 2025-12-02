@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"os"
 
-	MQTT "github.com/eclipse/paho.mqtt.golang"
+	MQTT "github.com/gojek/paho.mqtt.golang"
 )
 
 /*
@@ -86,6 +86,7 @@ func main() {
 	opts.SetUsername(*user)
 	opts.SetPassword(*password)
 	opts.SetCleanSession(*cleansess)
+
 	if *store != ":memory:" {
 		opts.SetStore(MQTT.NewFileStore(*store))
 	}
